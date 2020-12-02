@@ -12,8 +12,8 @@ function MakeResponsive() {
     var margin = {
         top: 30,
         bottom: 30,
-        right: 30,
-        left: 30
+        right: 200,
+        left: 20
     };
 
     var height = svgHeight - margin.top-margin.bottom
@@ -74,17 +74,17 @@ function MakeResponsive() {
         //     .attr("fill", "none")
         //     .attr("stroke", "black")
 
-        // var circlesGroup = chartGroup.selectAll("circle")
-        //     .data(data)
-        //     .enter()
-        //     .append("circle")
-        //     .attr("cx", d => xLinearScale(d.poverty))
-        //     .attr("cy", d => yLinearScale(d.healthcare))
-        //     .attr("r", "10")
-        //     .attr("fill", "blue")
-        //     .attr("stroke-width", "0.5")
-        //     .attr("stroke", "black")
-        //     .attr("opacity", .5);
+        var circlesGroup = chartGroup.selectAll("circle")
+            .data(data)
+            .enter()
+            .append("circle")
+            .attr("cx", d => xLinearScale(d.poverty))
+            .attr("cy", d => yLinearScale(d.healthcare))
+            .attr("r", "8")
+            .attr("fill", "blue")
+            .attr("stroke-width", "0.5")
+            .attr("stroke", "black")
+            .attr("opacity", .5);
 
         
         // chartGroup.selectAll("text")
@@ -95,23 +95,68 @@ function MakeResponsive() {
         //     .attr("dy", d=>yLinearScale(d.healthcare))
         //     .text(d => d.abbr)
 
-        var circular = chartGroup.selectAll("g").data(data).enter().append("g")
-            .attr("transform", d=> `translate(${xLinearScale(d.poverty)}, ${yLinearScale(d.healthcare)})`) 
 
 
-        var circle = circular.append("circle")
-            .attr("r", "10")
-            .classed("stateCircle", true)
-        circular.append("text")
-            .text(d => d.abbr)
+
+
+
+        var textGroup = chartGroup.selectAll("text")
+            .data(data)
+            .enter()
+            .append("text")
+            .attr("x", d => `${xLinearScale(d.poverty)}px`)
+            .attr("y", d => `${yLinearScale(d.healthcare)+3}px`)
+            .style("font-size", "9px")
+            .attr("text-anchor", "middle")
             .classed("stateText", true)
-
-        var toolTip = d3.tip().attr("class", "tooltip").html(d => `${d.healthcare}`)
-        chartGroup.call(toolTip)
-
-        circle.on("mouseover", function(d)  {
-            toolTip.show(d, this);
+            .text(d => d.abbr)
             
+
+        // var circular = chartGroup.selectAll("g").data(data).enter().append("g")
+        //     .attr("transform", d=> `translate(${xLinearScale(d.poverty)}, ${yLinearScale(d.healthcare)})`) 
+
+
+        // var circle = circular.append("circle")
+        //     .attr("r", "10")
+        //     .classed("stateCircle", true)
+        // circular.append("text")
+        //     .text(d => d.abbr)
+        //     .classed("stateText", true)
+
+        var toolTip = d3.select("body").append("div").attr("class", "d3-tip")
+
+        circlesGroup.on("mouseover", function(d)  {
+
+            toolTip.style("display", "block");
+      
+            toolTip.html(`<p>Healthcare: ${d.healthcare} <br/> Poverty: ${d.poverty}<p>`)
+                .style("left", d3.event.pageX + "px")
+                .style("top", d3.event.pageY + "px");
+
+            console.log(d.healthcare);
+            console.log(d);
+            console.log(this);
+            console.log(toolTip);
+        });
+        circlesGroup.on("mouseout", function(){
+            toolTip.style("display", "none");
+        });
+
+        textGroup.on("mouseover", function(d)  {
+
+            toolTip.style("display", "block");
+      
+            toolTip.html(`<p>Healthcare: ${d.healthcare} <br/> Poverty: ${d.poverty}<p>`)
+                .style("left", d3.event.pageX + "px")
+                .style("top", d3.event.pageY + "px");
+
+            console.log(d.healthcare);
+            console.log(d);
+            console.log(this);
+            console.log(toolTip);
+        });
+        textGroup.on("mouseout", function(){
+            toolTip.style("display", "none");
         });
     });
 };

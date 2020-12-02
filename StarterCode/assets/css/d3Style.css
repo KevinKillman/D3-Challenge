@@ -63,7 +63,7 @@
   text-align: center;
   color: white;
   background: blue;
-  border: 0;
+  border: solid;
   border-radius: 10px;
   display: none;
 }
