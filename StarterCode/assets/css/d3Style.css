@@ -29,6 +29,8 @@
   fill: #fff;
   text-anchor: middle;
   font-size: 10px;
+  padding-top: auto;
+  padding-left: auto;
 }
 
 .stateCircle {
@@ -43,12 +45,12 @@
 
 .d3-tip {
   position: absolute;
-  display: none;
+  /* display: none; */
   padding: 6px;
   font-size: 12px;
   line-height: 1;
   line-height: 1.5em;
-  color: rgb(212, 16, 16);
+  color:white;
   text-align: center;
   text-transform: capitalize;
   background: rgba(0, 0, 0, 0.8);
@@ -85,3 +87,13 @@
   }
 
 }
+/* @media screen and (min-width: 1600px) {
+  .container {
+      max-width: (1600px - @grid-gutter-width);
+  }
+}
+@media screen and (min-width: 1900px) {
+  .container {
+      max-width: (1900px - @grid-gutter-width);
+  }
+} */
