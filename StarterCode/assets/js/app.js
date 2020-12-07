@@ -82,8 +82,11 @@ function MakeResponsive() {
     if (!svgArea.empty()) {
         svgArea.remove();
     };
-    
+    svgWidth = window.innerWidth;
+    svgHeight = window.innerHeight;
 
+    height = svgHeight - margin.top - margin.bottom;
+    width = svgWidth - margin.left - margin.right;
 
     var svg = d3.select("#scatter")
         .append("svg")
@@ -167,21 +170,21 @@ function MakeResponsive() {
             .attr("y", 20)
             .attr("value", "poverty")
             .classed("active", true)
-            .text("Poverty")
+            .text("Poverty (%)")
 
         var ageLabel = xLabelsGroup.append("text")
             .attr("x", 0)
             .attr("y", 40)
             .attr("value", "age")
             .classed("inactive", true)
-            .text("Age");
+            .text("Age (Median)");
 
         var incomeLabel = xLabelsGroup.append("text")
             .attr("x", 0)
             .attr("y", 60)
             .attr("value", "income")
             .classed("inactive", true)
-            .text("Income");
+            .text("Income (Median)");
 
         xLabelsGroup.selectAll("text").on("click", function(){
             var value = d3.select(this).attr("value");
@@ -224,21 +227,21 @@ function MakeResponsive() {
             .attr("y", -23)
             .attr("value", "healthcare")
             .classed("active", true)
-            .text("Healthcare");
+            .text("Lack Healthcare (%)");
         var obesityLabel = yLabelsGroup.append("text")
             .attr("transform", "rotate(270)")
             .attr("x", 0)
             .attr("y", -40)
             .attr("value", "obesity")
             .classed("inactive", true)
-            .text("obesity");
+            .text("Obesity (%)");
         var smokesLabel = yLabelsGroup.append("text")
             .attr("transform", "rotate(270)")
             .attr("x", 0)
             .attr("y", -60)
             .attr("value", "smokes")
             .classed("inactive", true)
-            .text("smokes");
+            .text("Smokes (%)");
         yLabelsGroup.selectAll("text").on("click", function(){
             var value = d3.select(this).attr("value");
             if (value !== chosenY){
